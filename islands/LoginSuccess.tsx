@@ -4,8 +4,8 @@ import { getUserInfo, UserInfo } from "../utils/directus/getUserInfo.ts";
 import { LoginResult } from "../utils/directus/login.ts";
 
 export default class LoginSuccess extends Component<LoginResult, UserInfo> {
-  constructor() {
-    super();
+  constructor(props: LoginResult) {
+    super(props);
     this.state = { first_name: "Kate", last_name: "Allise", avatar: "" };
   }
 
@@ -33,7 +33,7 @@ export default class LoginSuccess extends Component<LoginResult, UserInfo> {
     }
   }
 
-  render(props: LoginResult) {
+  render() {
     return (
       <>
         <p class="text-xl italic mx-auto text-gray-700 max-w-4xl">
