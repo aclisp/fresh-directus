@@ -1,7 +1,11 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
-import * as log from "$std/log/mod.ts";
+import { getLogger } from "$std/log/mod.ts";
 import LoginSuccess from "../islands/LoginSuccess.tsx";
-import { login, LoginResult } from "../utils/directus/login.ts";
+import { login, LoginResult } from "../utils/directus/auth.ts";
+
+function logger() {
+  return getLogger("routes/login");
+}
 
 interface LoginData {
   email: string;
@@ -25,13 +29,13 @@ export const handler: Handlers<LoginData> = {
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
     const rememberMe = formData.get("rememberMe");
-    log.debug(
-      `POST Login email=${email} password=${password} rememberMe=${rememberMe}`,
+    logger().debug(
+      `POST email=${email} password=${password} rememberMe=${rememberMe}`,
     );
 
     // 检查用户名和密码
     const loginResult = await login(email, password);
-    log.debug(`after login: ${JSON.stringify(loginResult)}`);
+    logger().debug(`await login returns: ${JSON.stringify(loginResult)}`);
 
     const data: LoginData = {
       email: email,

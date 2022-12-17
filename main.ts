@@ -19,11 +19,15 @@ await log.setup({
       formatter: (r) =>
         `${
           format(r.datetime, "yyyy-MM-dd HH:mm:ss.SSS")
-        } ${r.levelName} ${r.msg}`,
+        } ${r.levelName} [${r.loggerName}] ${r.msg}`,
     }),
   },
   loggers: {
     default: {
+      level: "DEBUG",
+      handlers: ["console"],
+    },
+    "routes/login": {
       level: "DEBUG",
       handlers: ["console"],
     },

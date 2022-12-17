@@ -1,5 +1,5 @@
+import { getAccessToken } from "./auth.ts";
 import { DIRECTUS_HOST } from "./constant.ts";
-import { Context } from "./context.ts";
 
 export interface UserInfo {
   first_name: string;
@@ -7,15 +7,16 @@ export interface UserInfo {
   avatar: string;
 }
 
-export async function getUserInfo(ctx: Context): Promise<UserInfo> {
+export async function getCurrentUserInfo(): Promise<UserInfo> {
   const params = new URLSearchParams();
   params.append("fields[]", "first_name");
   params.append("fields[]", "last_name");
   params.append("fields[]", "avatar");
+  const accessToken = await getAccessToken();
   const res = await fetch(DIRECTUS_HOST + "/users/me?" + params, {
     method: "GET",
     headers: {
-      "Authorization": `Bearer ${ctx.access_token}`,
+      "Authorization": `Bearer ${accessToken}`,
     },
   });
   const json = await res.json();

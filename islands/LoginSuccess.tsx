@@ -1,7 +1,7 @@
 import { Component } from "preact";
 import { DIRECTUS_HOST } from "../utils/directus/constant.ts";
-import { getUserInfo, UserInfo } from "../utils/directus/getUserInfo.ts";
-import { LoginResult } from "../utils/directus/login.ts";
+import { getCurrentUserInfo, UserInfo } from "../utils/directus/users.ts";
+import { LoginResult, updateStorage } from "../utils/directus/auth.ts";
 
 export default class LoginSuccess extends Component<LoginResult, UserInfo> {
   constructor(props: LoginResult) {
@@ -10,21 +10,17 @@ export default class LoginSuccess extends Component<LoginResult, UserInfo> {
   }
 
   async componentDidMount() {
-    localStorage.setItem("access_token", this.props.access_token);
-    localStorage.setItem("access_token.expires", this.props.expires.toString());
-    localStorage.setItem("refresh_token", this.props.refresh_token);
+    updateStorage(this.props);
 
-    const userInfo = await getUserInfo({
-      access_token: this.props.access_token,
-    });
+    const userInfo = await getCurrentUserInfo();
     this.setState(userInfo);
 
-    setTimeout(() => {
-      window.location.replace("/");
-    }, 2000);
+    // setTimeout(() => {
+    //   window.location.replace("/");
+    // }, 2000);
   }
 
-  avatar(): string {
+  private getAvatar(): string {
     if (!this.state.avatar) {
       return "https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(10).webp";
     } else {
@@ -41,7 +37,7 @@ export default class LoginSuccess extends Component<LoginResult, UserInfo> {
         </p>
         <div class="mt-12 mb-6 flex justify-center">
           <img
-            src={this.avatar()}
+            src={this.getAvatar()}
             class="rounded-full w-24 h-24 shadow-lg"
             alt="smaple image"
           />
