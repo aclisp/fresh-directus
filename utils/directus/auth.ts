@@ -48,6 +48,20 @@ export function updateStorage(loginResult: LoginResult) {
   localStorage.setItem("access_token", loginResult.access_token);
   localStorage.setItem("access_token.expires_at", getExpiresAt(loginResult));
   localStorage.setItem("refresh_token", loginResult.refresh_token);
+  setCookie("access_token", loginResult.access_token, loginResult.expires);
+}
+
+function setCookie(name: string, value: string, ms?: number) {
+  let expires;
+  if (ms) {
+    const date = new Date();
+    date.setTime(date.getTime() + ms);
+    expires = "; expires=" + date.toUTCString();
+  } else {
+    expires = "";
+  }
+  document.cookie = name + "=" + value + expires +
+    "; path=/; samesite=strict";
 }
 
 function getExpiresAt(loginResult: LoginResult): string {
