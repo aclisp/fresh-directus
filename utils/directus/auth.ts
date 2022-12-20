@@ -1,47 +1,24 @@
-import { DIRECTUS_HOST } from "./constant.ts";
+import { httpPost, Result } from "./transport.ts";
 
-export interface LoginResult {
-  ok: boolean;
-  msg: string;
+export interface LoginInfo {
   access_token: string;
   expires: number;
   refresh_token: string;
 }
 
-function failure(res: Response): LoginResult {
-  return {
-    ok: false,
-    msg: `${res.status} ${res.statusText}`,
-    access_token: "",
-    expires: 0,
-    refresh_token: "",
-  };
-}
+export type LoginResult = LoginInfo & Result;
 
-// Retrieve a temporary access token and refresh token.
 export async function login(
   email: string,
   password: string,
 ): Promise<LoginResult> {
-  const res = await fetch(DIRECTUS_HOST + "/auth/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      email: email,
-      password: password,
-    }),
+  return await httpPost<LoginResult>("/auth/login", {
+    email: email,
+    password: password,
+  }, {
+    noAuthorizationHeader: true,
+    accessToken: null,
   });
-  if (!res.ok) {
-    return failure(res);
-  }
-  const json = await res.json();
-  const loginResult: LoginResult = {
-    ok: true,
-    ...json.data,
-  };
-  return loginResult;
 }
 
 export function updateStorage(loginResult: LoginResult) {
@@ -93,23 +70,11 @@ export async function getAccessToken(): Promise<string> {
 }
 
 async function refresh(refreshToken: string): Promise<LoginResult> {
-  const res = await fetch(DIRECTUS_HOST + "/auth/refresh", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      refresh_token: refreshToken,
-      mode: "json",
-    }),
+  return await httpPost<LoginResult>("/auth/refresh", {
+    refresh_token: refreshToken,
+    mode: "json",
+  }, {
+    noAuthorizationHeader: true,
+    accessToken: null,
   });
-  if (!res.ok) {
-    return failure(res);
-  }
-  const json = await res.json();
-  const loginResult: LoginResult = {
-    ok: true,
-    ...json.data,
-  };
-  return loginResult;
 }

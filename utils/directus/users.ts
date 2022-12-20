@@ -1,5 +1,4 @@
-import { getAccessToken } from "./auth.ts";
-import { DIRECTUS_HOST } from "./constant.ts";
+import { httpGet } from "./transport.ts";
 
 export interface UserInfo {
   first_name: string;
@@ -12,13 +11,5 @@ export async function getCurrentUserInfo(): Promise<UserInfo> {
   params.append("fields[]", "first_name");
   params.append("fields[]", "last_name");
   params.append("fields[]", "avatar");
-  const accessToken = await getAccessToken();
-  const res = await fetch(DIRECTUS_HOST + "/users/me?" + params, {
-    method: "GET",
-    headers: {
-      "Authorization": `Bearer ${accessToken}`,
-    },
-  });
-  const json = await res.json();
-  return json.data;
+  return await httpGet<UserInfo>("/users/me", { params });
 }

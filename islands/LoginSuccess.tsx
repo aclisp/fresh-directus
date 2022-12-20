@@ -1,5 +1,5 @@
 import { Component } from "preact";
-import { DIRECTUS_HOST } from "../utils/directus/constant.ts";
+import { DIRECTUS_HOST } from "../utils/directus/transport.ts";
 import { getCurrentUserInfo, UserInfo } from "../utils/directus/users.ts";
 import { LoginResult, updateStorage } from "../utils/directus/auth.ts";
 
