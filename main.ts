@@ -31,6 +31,14 @@ await log.setup({
       level: "DEBUG",
       handlers: ["console"],
     },
+    "directus/transport": {
+      level: "DEBUG",
+      handlers: ["console"],
+    },
+    "directus/storage": {
+      level: "DEBUG",
+      handlers: ["console"],
+    },
   },
 });
 

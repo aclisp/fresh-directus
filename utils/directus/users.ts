@@ -6,10 +6,12 @@ export interface UserInfo {
   avatar: string;
 }
 
-export async function getCurrentUserInfo(): Promise<UserInfo> {
+export async function getCurrentUserInfo(
+  token: string,
+): Promise<UserInfo> {
   const params = new URLSearchParams();
   params.append("fields[]", "first_name");
   params.append("fields[]", "last_name");
   params.append("fields[]", "avatar");
-  return await httpGet<UserInfo>("/users/me", { params });
+  return await httpGet<UserInfo>("/users/me", { accessToken: token });
 }

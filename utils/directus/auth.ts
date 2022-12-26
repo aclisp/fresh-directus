@@ -1,4 +1,10 @@
+import { getStorageValue, setStorageValue, StorageValue } from "./storage.ts";
 import { httpPost, Result } from "./transport.ts";
+
+export const DIRECTUS_AUTH_COOKIE_NAME = "_uid";
+export const DIRECTUS_AUTH_COOKIE_MAX_AGE_SECONDS = 7 * 24 * 60 * 60;
+
+export type SessionIdentifier = string;
 
 export interface LoginInfo {
   access_token: string;
@@ -21,28 +27,20 @@ export async function login(
   });
 }
 
-export function updateStorage(loginResult: LoginResult) {
-  localStorage.setItem("access_token", loginResult.access_token);
-  localStorage.setItem("access_token.expires_at", getExpiresAt(loginResult));
-  localStorage.setItem("refresh_token", loginResult.refresh_token);
-  setCookie("access_token", loginResult.access_token, loginResult.expires);
-}
-
-function setCookie(name: string, value: string, ms?: number) {
-  let expires;
-  if (ms) {
-    const date = new Date();
-    date.setTime(date.getTime() + ms);
-    expires = "; expires=" + date.toUTCString();
-  } else {
-    expires = "";
-  }
-  document.cookie = name + "=" + value + expires +
-    "; path=/; samesite=strict";
-}
-
-function getExpiresAt(loginResult: LoginResult): string {
-  return (Date.now() + loginResult.expires).toString();
+export function updateStorage(
+  uid: SessionIdentifier,
+  loginResult: LoginResult,
+): StorageValue {
+  const now = Date.now();
+  const expiresAt = now + DIRECTUS_AUTH_COOKIE_MAX_AGE_SECONDS * 1000;
+  const value = {
+    ...loginResult,
+    accessTokenExpiresAt: now + loginResult.expires,
+    //accessTokenExpiresAt: now + 60000,
+    refreshTokenExpiresAt: expiresAt,
+  };
+  setStorageValue(uid, value);
+  return value;
 }
 
 export class NeedLoginError extends Error {
@@ -52,21 +50,28 @@ export class NeedLoginError extends Error {
   }
 }
 
-export async function getAccessToken(): Promise<string> {
-  const expiresAt = localStorage.getItem("access_token.expires_at");
-  if (!expiresAt) {
+export async function getAccessToken(
+  uid: SessionIdentifier,
+  onRefresh?: (storageValue: StorageValue) => void,
+): Promise<string> {
+  let storageValue = getStorageValue(uid);
+  if (!storageValue) {
     throw new NeedLoginError("never login");
   }
+  const expiresAt = storageValue.accessTokenExpiresAt;
   if (+expiresAt < Date.now() + 30000) {
-    const refreshToken = localStorage.getItem("refresh_token");
+    const refreshToken = storageValue.refresh_token;
     const loginResult = await refresh(refreshToken!);
     if (loginResult.ok) {
-      updateStorage(loginResult);
+      storageValue = updateStorage(uid, loginResult);
+      if (onRefresh) {
+        onRefresh(storageValue);
+      }
     } else {
       throw new NeedLoginError("refresh failure");
     }
   }
-  return localStorage.getItem("access_token")!;
+  return storageValue.access_token;
 }
 
 async function refresh(refreshToken: string): Promise<LoginResult> {

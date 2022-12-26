@@ -1,4 +1,5 @@
-import { getAccessToken } from "./auth.ts";
+import { getLogger } from "$std/log/mod.ts";
+import { getAccessToken, SessionIdentifier } from "./auth.ts";
 
 export const DIRECTUS_HOST = "http://127.0.0.1:8055";
 
@@ -13,6 +14,11 @@ export interface TransportOptions {
   accessToken?: string | null;
   /** Global query parameters */
   params?: URLSearchParams;
+  uid?: SessionIdentifier;
+}
+
+function logger() {
+  return getLogger("directus/transport");
 }
 
 export async function httpPost<T>(
@@ -24,14 +30,20 @@ export async function httpPost<T>(
     noAuthorizationHeader = false,
     accessToken,
     params,
+    uid,
   } = options;
-  if (accessToken === undefined) {
-    accessToken = await getAccessToken();
+  logger().debug(`POST ${path}`);
+
+  if (accessToken === undefined && uid) {
+    accessToken = await getAccessToken(uid);
   }
   const headers = new Headers({
     "Content-Type": "application/json",
   });
   if (!noAuthorizationHeader) {
+    if (!accessToken) {
+      throw new Error(`missing access token: ${accessToken}`);
+    }
     headers.set("Authorization", `Bearer ${accessToken}`);
   }
   let url = DIRECTUS_HOST + path;
@@ -73,12 +85,18 @@ export async function httpGet<T>(
     noAuthorizationHeader = false,
     accessToken,
     params,
+    uid,
   } = options;
-  if (accessToken === undefined) {
-    accessToken = await getAccessToken();
+  logger().debug(`GET ${path}`);
+
+  if (accessToken === undefined && uid) {
+    accessToken = await getAccessToken(uid);
   }
   const headers = new Headers();
   if (!noAuthorizationHeader) {
+    if (!accessToken) {
+      throw new Error(`missing access token: ${accessToken}`);
+    }
     headers.set("Authorization", `Bearer ${accessToken}`);
   }
   let url = DIRECTUS_HOST + path;

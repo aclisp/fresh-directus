@@ -1,7 +1,16 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
 import { getLogger } from "$std/log/mod.ts";
-import LoginSuccess from "../islands/LoginSuccess.tsx";
-import { login, LoginResult } from "../utils/directus/auth.ts";
+import { getCookies, setCookie } from "$std/http/cookie.ts";
+import {
+  DIRECTUS_AUTH_COOKIE_NAME,
+  login,
+  LoginResult,
+  updateStorage,
+} from "$directus/auth.ts";
+import { DIRECTUS_HOST } from "$directus/transport.ts";
+import { getCurrentUserInfo, UserInfo } from "$directus/users.ts";
+import { delStorageValue } from "$directus/storage.ts";
+import { randomUUID } from "../utils/uuid.ts";
 
 function logger() {
   return getLogger("routes/login");
@@ -12,6 +21,7 @@ interface LoginData {
   password: string;
   rememberMe: boolean;
   loginResult?: LoginResult;
+  userInfo?: UserInfo;
 }
 
 const DEFAULT_LOGIN_DATA: LoginData = {
@@ -36,14 +46,52 @@ export const handler: Handlers<LoginData> = {
     // 检查用户名和密码
     const loginResult = await login(email, password);
     logger().debug(`await login returns: ${JSON.stringify(loginResult)}`);
+    if (!loginResult.ok) {
+      const data: LoginData = {
+        email,
+        password,
+        rememberMe: !!rememberMe,
+        loginResult,
+      };
+      return ctx.render(data);
+    }
+
+    // 设置存储，获取到一个随机的 uid
+    const lastUid = getCookies(req.headers)[DIRECTUS_AUTH_COOKIE_NAME];
+    if (lastUid) {
+      delStorageValue(lastUid);
+      logger().debug(`deleted last uid: ${lastUid}`);
+    }
+    const newUid = randomUUID();
+    const storageValue = updateStorage(newUid, loginResult);
+    logger().debug(`update storage with new uid: ${newUid}`);
+
+    // 获取当前用户的信息
+    const userInfo = await getCurrentUserInfo(storageValue.access_token);
+    logger().debug(
+      `await get current user info returns: ${JSON.stringify(userInfo)}`,
+    );
 
     const data: LoginData = {
-      email: email,
-      password: password,
+      email,
+      password,
       rememberMe: !!rememberMe,
-      loginResult: loginResult,
+      loginResult,
+      userInfo,
     };
-    return ctx.render(data);
+    const resp = await ctx.render(data);
+
+    // 把随机的 uid 种到客户端 Cookie
+    setCookie(resp.headers, {
+      name: DIRECTUS_AUTH_COOKIE_NAME,
+      value: newUid,
+      expires: storageValue.refreshTokenExpiresAt,
+      path: "/",
+      sameSite: "Strict",
+      httpOnly: true,
+      //secure: true,
+    });
+    return resp;
   },
 };
 
@@ -61,7 +109,7 @@ export default function Login({ data }: PageProps<LoginData>) {
           </div>
           <div class="xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0">
             {data.loginResult?.ok
-              ? <LoginSuccess {...data.loginResult} />
+              ? <LoginSuccess data={data} />
               : <LoginForm data={data} />}
           </div>
         </div>
@@ -229,4 +277,36 @@ function LoginAlert(props: { data: LoginData }) {
       {props.data.loginResult.msg}
     </div>
   );
+}
+
+function LoginSuccess(props: { data: LoginData }) {
+  return (
+    <>
+      <p class="text-xl italic mx-auto text-gray-700 max-w-4xl">
+        Welcome back!
+      </p>
+      <div class="mt-12 mb-6 flex justify-center">
+        <img
+          src={getAvatar(props.data)}
+          class="rounded-full w-24 h-24 shadow-lg"
+          alt="smaple image"
+        />
+      </div>
+      <p class="text-gray-500">
+        {props.data.userInfo?.first_name}{" "}
+        {props.data.userInfo?.last_name}, you will be redirected to home in 2
+        seconds...
+      </p>
+    </>
+  );
+}
+
+function getAvatar(data: LoginData): string {
+  if (!data.userInfo?.avatar) {
+    return "https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(10).webp";
+  } else {
+    return DIRECTUS_HOST + "/assets/" + data.userInfo.avatar +
+      "?access_token=" +
+      data.loginResult?.access_token;
+  }
 }
