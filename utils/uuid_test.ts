@@ -1,7 +1,7 @@
 import { randomUUID, uuidToBase64, uuidToBase64Native } from "./uuid.ts";
 import { assertEquals } from "$std/testing/asserts.ts";
 
-Deno.test("test1", () => {
+Deno.test("uuidToBase64", () => {
   for (let i = 0; i < 10; i++) {
     const uuid = crypto.randomUUID();
     const b1 = uuidToBase64(uuid);
@@ -11,7 +11,7 @@ Deno.test("test1", () => {
   }
 });
 
-Deno.test("test2", () => {
+Deno.test("randomUUID", () => {
   for (let i = 0; i < 10; i++) {
     const uuid = randomUUID();
     console.log(`${uuid}`);

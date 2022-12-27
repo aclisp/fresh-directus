@@ -12,6 +12,7 @@ import twindConfig from "./twind.config.ts";
 
 import * as log from "$std/log/mod.ts";
 import { format } from "$std/datetime/mod.ts";
+import { dumpStorage, loadStorage, shrinkStorage } from "$directus/storage.ts";
 
 await log.setup({
   handlers: {
@@ -41,5 +42,28 @@ await log.setup({
     },
   },
 });
+
+await loadStorage();
+
+async function onExit() {
+  await dumpStorage();
+  log.debug("Bye~");
+  Deno.exit();
+}
+
+for (
+  const signal of [
+    "SIGINT",
+    "SIGTERM",
+    "SIGHUP",
+    "SIGQUIT",
+  ]
+) {
+  Deno.addSignalListener(signal as Deno.Signal, onExit);
+}
+
+setInterval(() => {
+  shrinkStorage();
+}, 60000);
 
 await start(manifest, { plugins: [twindPlugin(twindConfig)] });

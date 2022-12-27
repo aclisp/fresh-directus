@@ -72,7 +72,9 @@ export default function StoragePage({ data }: PageProps<StorageData>) {
                         {uid}
                       </td>
                       <td class="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
-                        {value.access_token.substring(0, 20)}
+                        {value.access_token.substring(
+                          value.access_token.length - 20,
+                        )}
                       </td>
                       <td class="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
                         {value.refresh_token.substring(0, 20)}
