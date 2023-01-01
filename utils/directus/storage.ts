@@ -1,5 +1,5 @@
 import { getLogger } from "$std/log/mod.ts";
-import { readLines } from "$std/io/mod.ts";
+import { readLines } from "$std/io/read_lines.ts";
 import { LoginInfo, SessionIdentifier } from "./auth.ts";
 
 export const STORAGE_FILE = "storage.txt";

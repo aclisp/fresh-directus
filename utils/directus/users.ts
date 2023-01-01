@@ -13,5 +13,5 @@ export async function getCurrentUserInfo(
   params.append("fields[]", "first_name");
   params.append("fields[]", "last_name");
   params.append("fields[]", "avatar");
-  return await httpGet<UserInfo>("/users/me", { accessToken: token });
+  return await httpGet<UserInfo>("/users/me", { params, accessToken: token });
 }

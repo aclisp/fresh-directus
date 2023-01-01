@@ -61,7 +61,7 @@ export async function getAccessToken(
   const expiresAt = storageValue.accessTokenExpiresAt;
   if (+expiresAt < Date.now() + 30000) {
     const refreshToken = storageValue.refresh_token;
-    const loginResult = await refresh(refreshToken!);
+    const loginResult = await refresh(refreshToken);
     if (loginResult.ok) {
       storageValue = updateStorage(uid, loginResult);
       if (onRefresh) {
