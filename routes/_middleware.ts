@@ -11,6 +11,7 @@ import {
 
 const pathnameWithSession = [
   "/profile",
+  "/sub",
 ];
 
 export async function handler(

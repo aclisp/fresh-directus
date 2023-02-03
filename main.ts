@@ -19,12 +19,16 @@ await log.setup({
     console: new log.handlers.ConsoleHandler("DEBUG", {
       formatter: (r) =>
         `${
-          format(r.datetime, "yyyy-MM-dd HH:mm:ss.SSS")
+          format(r.datetime, "MMdd HH:mm:ss.SSS")
         } ${r.levelName} [${r.loggerName}] ${r.msg}`,
     }),
   },
   loggers: {
     default: {
+      level: "DEBUG",
+      handlers: ["console"],
+    },
+    "routes/sub": {
       level: "DEBUG",
       handlers: ["console"],
     },

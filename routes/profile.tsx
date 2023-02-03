@@ -1,7 +1,5 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
 import { getCurrentUserInfo, UserInfo } from "$directus/users.ts";
-import { getCookies } from "$std/http/cookie.ts";
-import { DIRECTUS_AUTH_COOKIE_NAME, getAccessToken } from "$directus/auth.ts";
 import { DIRECTUS_HOST } from "$directus/transport.ts";
 import { State } from "../utils/types.ts";
 
