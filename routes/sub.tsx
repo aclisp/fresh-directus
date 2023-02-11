@@ -20,7 +20,7 @@ export const handler: Handlers<SubscribeData, State> = {
     const channel = searchParams.get("channel");
     const { accessToken } = ctx.state;
     const userInfo = await getCurrentUserInfo(accessToken);
-    logger().info(`accessToken: ${accessToken}`);
+    logger().debug(`accessToken: ${accessToken}`);
     const resp = await ctx.render({ channel, userInfo, accessToken });
     return resp;
   },
@@ -29,8 +29,8 @@ export const handler: Handlers<SubscribeData, State> = {
 export default function Subscribe({ data }: PageProps<SubscribeData>) {
   return (
     <>
-      <p>{data.channel}</p>
-      <Channel token={data.accessToken} />
+      <p>CHANNEL {data.channel}</p>
+      <Channel token={data.accessToken} channel={data.channel!} />
     </>
   );
 }

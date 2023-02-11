@@ -3,6 +3,7 @@ import { io } from "socket.io-client";
 
 interface ChannelProps {
   token: string;
+  channel: string;
 }
 
 export default function Channel(props: ChannelProps) {
@@ -13,14 +14,10 @@ export default function Channel(props: ChannelProps) {
 
   useEffect(() => {
     const socket = io("http://127.0.0.1:8055", {
-      // query: {
-      //   access_token: props.token,
-      // },
+      //transports: ["polling"],
       auth: {
-        reconnect: 0,
-        offset: undefined,
         token: props.token,
-        //token: "abcd",
+        channel: props.channel,
       },
     });
     socketRef.current = socket;
@@ -29,7 +26,17 @@ export default function Channel(props: ChannelProps) {
     socket.on("connect", () => {
       console.log(`channel connected: socket id=${socket.id}`);
       setIsConnected(true);
-      socket.auth.reconnect += 1;
+    });
+
+    socket.io.on("reconnect_attempt", async () => {
+      // refresh token here
+      const res = await fetch("/api/token");
+      if (res.ok) {
+        const token = await res.text();
+        socket.auth.token = token;
+        // because the token is fetched later, we have to manually reconnect after auto-reconnection failure.
+        setTimeout(() => socket.connect(), 5000);
+      }
     });
 
     socket.on("disconnect", (reason: string) => {
@@ -44,10 +51,11 @@ export default function Channel(props: ChannelProps) {
       setLastPong(new Date().toISOString());
     });
 
+    socket.on("data", (data: Record<string, unknown>) => {
+      console.log(data);
+    });
+
     return () => {
-      socket.off("connect");
-      socket.off("disconnect");
-      socket.off("pong");
       console.log(`channel dropped: socket id=${socket.id}`);
       socket.close();
     };
