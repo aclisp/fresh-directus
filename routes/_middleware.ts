@@ -10,6 +10,7 @@ import {
 } from "$directus/auth.ts";
 
 const pathnameWithSession = [
+  "/",
   "/profile",
   "/sub",
   "/api/token",
@@ -28,10 +29,15 @@ export async function handler(
 
   if (withSession) {
     uid = getCookies(req.headers)[DIRECTUS_AUTH_COOKIE_NAME];
-    const accessToken = await getAccessToken(uid, (storageValue) => {
-      expires = storageValue.refreshTokenExpiresAt;
-    });
-    ctx.state = { uid, accessToken };
+    try {
+      const accessToken = await getAccessToken(uid, (storageValue) => {
+        expires = storageValue.refreshTokenExpiresAt;
+      });
+      ctx.state = { uid, accessToken };
+    } catch (error) {
+      log.info(`${error.name}: ${error.message}`);
+      ctx.state = { uid: uid, accessToken: "" };
+    }
   }
 
   const resp = await ctx.next();

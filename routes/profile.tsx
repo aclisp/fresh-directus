@@ -3,6 +3,7 @@ import { getCurrentUserInfo, UserInfo } from "$directus/users.ts";
 import { DIRECTUS_HOST } from "$directus/transport.ts";
 import { State } from "../utils/types.ts";
 import Navbar from "../islands/Navbar.tsx";
+import { Head } from "$fresh/runtime.ts";
 
 interface ProfileData {
   userInfo: UserInfo;
@@ -21,6 +22,9 @@ export const handler: Handlers<ProfileData, State> = {
 export default function Profile({ data }: PageProps<ProfileData>) {
   return (
     <>
+      <Head>
+        <title>个人信息</title>
+      </Head>
       <Navbar avatar={data.userInfo.avatar} token={data.accessToken} />
       <div class="mt-10 text-center">
         <img
