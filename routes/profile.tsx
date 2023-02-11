@@ -2,6 +2,7 @@ import { Handlers, PageProps } from "$fresh/server.ts";
 import { getCurrentUserInfo, UserInfo } from "$directus/users.ts";
 import { DIRECTUS_HOST } from "$directus/transport.ts";
 import { State } from "../utils/types.ts";
+import Navbar from "../islands/Navbar.tsx";
 
 interface ProfileData {
   userInfo: UserInfo;
@@ -19,17 +20,20 @@ export const handler: Handlers<ProfileData, State> = {
 
 export default function Profile({ data }: PageProps<ProfileData>) {
   return (
-    <div class="text-center">
-      <img
-        src={getAvatar(data)}
-        class="rounded-full w-32 mb-4 mx-auto"
-        alt="Avatar"
-      />
-      <h5 class="text-xl font-medium leading-tight mb-2">
-        {data.userInfo.first_name} {data.userInfo.last_name}
-      </h5>
-      <p class="text-gray-500">Web designer</p>
-    </div>
+    <>
+      <Navbar avatar={data.userInfo.avatar} token={data.accessToken} />
+      <div class="mt-10 text-center">
+        <img
+          src={getAvatar(data)}
+          class="rounded-full w-32 mb-4 mx-auto"
+          alt="Avatar"
+        />
+        <h5 class="text-xl font-medium leading-tight mb-2">
+          {data.userInfo.first_name} {data.userInfo.last_name}
+        </h5>
+        <p class="text-gray-500">Web designer</p>
+      </div>
+    </>
   );
 }
 

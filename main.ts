@@ -12,7 +12,7 @@ import twindConfig from "./twind.config.ts";
 
 import * as log from "$std/log/mod.ts";
 import { format } from "$std/datetime/mod.ts";
-import { dumpStorage, loadStorage, shrinkStorage } from "$directus/storage.ts";
+import { dumpStorage, loadStorage } from "$directus/storage.ts";
 
 await log.setup({
   handlers: {
@@ -67,7 +67,7 @@ for (
 }
 
 setInterval(() => {
-  shrinkStorage();
-}, 60000);
+  dumpStorage();
+}, 13000);
 
 await start(manifest, { plugins: [twindPlugin(twindConfig)] });
