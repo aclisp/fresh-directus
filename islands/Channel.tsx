@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "preact/hooks";
 import { io } from "socket.io-client";
+import { DIRECTUS_HOST } from "../utils/directus/transport.ts";
 
 interface ChannelProps {
   token: string;
@@ -13,7 +14,7 @@ export default function Channel(props: ChannelProps) {
   const socketRef = useRef<any>(null);
 
   useEffect(() => {
-    const socket = io("http://127.0.0.1:8055", {
+    const socket = io(DIRECTUS_HOST, {
       //transports: ["polling"],
       auth: {
         token: props.token,

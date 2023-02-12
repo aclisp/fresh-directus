@@ -84,7 +84,7 @@ export default function Navbar(props: NavbarProps) {
           >
             <img
               src="/logo.svg"
-              style="height: 15px"
+              style="height: 25px"
               alt=""
               loading="lazy"
             />
@@ -121,7 +121,7 @@ export default function Navbar(props: NavbarProps) {
         {/* Collapsible wrapper */}
 
         {/* Right elements */}
-        <div class="flex items-center relative">
+        <div class="flex items-center relative p-2">
           {props.token
             ? (
               <NabarWithUserAvatar

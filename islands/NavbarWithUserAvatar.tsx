@@ -32,7 +32,7 @@ export default function NabarWithUserAvatar(props: NavbarProps) {
             focusable="false"
             data-prefix="fas"
             data-icon="bell"
-            class="w-4"
+            class="w-5"
             role="img"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 448 512"
