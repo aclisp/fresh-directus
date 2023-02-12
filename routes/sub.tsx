@@ -3,6 +3,8 @@ import { getCurrentUserInfo, UserInfo } from "$directus/users.ts";
 import { State } from "../utils/types.ts";
 import Channel from "../islands/Channel.tsx";
 import { getLogger } from "$std/log/mod.ts";
+import Navbar from "../islands/Navbar.tsx";
+import { Head } from "$fresh/runtime.ts";
 
 interface SubscribeData {
   channel: string | null;
@@ -29,8 +31,13 @@ export const handler: Handlers<SubscribeData, State> = {
 export default function Subscribe({ data }: PageProps<SubscribeData>) {
   return (
     <>
-      <p>CHANNEL {data.channel}</p>
-      <Channel token={data.accessToken} channel={data.channel!} />
+      <Head>
+        <title>订阅频道</title>
+      </Head>
+      <Navbar avatar={data.userInfo.avatar} token={data.accessToken} />
+      <div class="mt-2">
+        <Channel token={data.accessToken} channel={data.channel!} />
+      </div>
     </>
   );
 }
