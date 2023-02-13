@@ -1,0 +1,14 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "deno",
+      "command": "fmt",
+      "problemMatcher": [
+        "$deno"
+      ],
+      "label": "deno task: fmt",
+      "detail": "deno fmt"
+    }
+  ]
+}

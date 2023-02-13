@@ -147,7 +147,7 @@ function PushData(props: { dataList: Array<Record<string, unknown>> }) {
                     {String(data._counter)}
                   </td>
                   <td class="text-sm text-gray-900 font-light px-6 py-2 whitespace-normal max-w-[9rem] lg:max-w-lg truncate">
-                    {JSON.stringify(data.data)}
+                    {JSON.stringify(extractData(data))}
                   </td>
                   <td class="text-sm text-gray-900 font-light px-6 py-2 whitespace-normal">
                     {(data._time as Date).toLocaleString()}
@@ -160,4 +160,9 @@ function PushData(props: { dataList: Array<Record<string, unknown>> }) {
       </div>
     </div>
   );
+}
+
+function extractData(data: Record<string, unknown>) {
+  const { _counter, _time, ...extracted } = data;
+  return extracted;
 }
