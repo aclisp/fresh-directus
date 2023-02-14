@@ -6,11 +6,11 @@ import {
   login,
   LoginResult,
   updateStorage,
-} from "$directus/auth.ts";
-import { DIRECTUS_HOST } from "$directus/transport.ts";
-import { getCurrentUserInfo, UserInfo } from "$directus/users.ts";
-import { delStorageValue } from "$directus/storage.ts";
-import { randomUUID } from "../utils/uuid.ts";
+} from "@/utils/directus/auth.ts";
+import { DIRECTUS_HOST } from "@/utils/directus/transport.ts";
+import { getCurrentUserInfo, UserInfo } from "@/utils/directus/users.ts";
+import { delStorageValue } from "@/utils/directus/storage.ts";
+import { randomUUID } from "@/utils/uuid.ts";
 
 function logger() {
   return getLogger("routes/login");

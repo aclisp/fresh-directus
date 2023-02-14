@@ -1,6 +1,5 @@
-import { DIRECTUS_HOST } from "../utils/directus/transport.ts";
 import { useState } from "preact/hooks";
-import NabarWithUserAvatar from "./NavbarWithUserAvatar.tsx";
+import NabarWithUserAvatar from "@/islands/NavbarWithUserAvatar.tsx";
 
 export interface NavbarProps {
   avatar?: string;

@@ -1,9 +1,9 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
-import { getCurrentUserInfo, UserInfo } from "$directus/users.ts";
-import { State } from "../utils/types.ts";
-import Channel from "../islands/Channel.tsx";
+import { getCurrentUserInfo, UserInfo } from "@/utils/directus/users.ts";
+import { State } from "@/utils/types.ts";
+import Channel from "@/islands/Channel.tsx";
 import { getLogger } from "$std/log/mod.ts";
-import Navbar from "../islands/Navbar.tsx";
+import Navbar from "@/islands/Navbar.tsx";
 import { Head } from "$fresh/runtime.ts";
 
 interface SubscribeData {

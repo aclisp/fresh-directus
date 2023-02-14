@@ -1,8 +1,8 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
-import { getCurrentUserInfo, UserInfo } from "$directus/users.ts";
-import { DIRECTUS_HOST } from "$directus/transport.ts";
-import { State } from "../utils/types.ts";
-import Navbar from "../islands/Navbar.tsx";
+import { getCurrentUserInfo, UserInfo } from "@/utils/directus/users.ts";
+import { DIRECTUS_HOST } from "@/utils/directus/transport.ts";
+import { State } from "@/utils/types.ts";
+import Navbar from "@/islands/Navbar.tsx";
 import { Head } from "$fresh/runtime.ts";
 
 interface ProfileData {

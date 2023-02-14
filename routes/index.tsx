@@ -1,9 +1,9 @@
 import { Head } from "$fresh/runtime.ts";
-import Counter from "../islands/Counter.tsx";
-import Navbar from "../islands/Navbar.tsx";
-import { getCurrentUserInfo, UserInfo } from "../utils/directus/users.ts";
+import Counter from "@/islands/Counter.tsx";
+import Navbar from "@/islands/Navbar.tsx";
+import { getCurrentUserInfo, UserInfo } from "@/utils/directus/users.ts";
 import { Handlers, PageProps } from "$fresh/server.ts";
-import { State } from "../utils/types.ts";
+import { State } from "@/utils/types.ts";
 
 interface HomeData {
   userInfo: UserInfo;

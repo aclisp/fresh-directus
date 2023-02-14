@@ -1,13 +1,13 @@
 import * as log from "$std/log/mod.ts";
 import { blue, cyan, green, red, yellow } from "$std/fmt/colors.ts";
 import { MiddlewareHandlerContext } from "$fresh/server.ts";
-import { State } from "../utils/types.ts";
+import { State } from "@/utils/types.ts";
 import { getCookies, setCookie } from "$std/http/cookie.ts";
 import {
   DIRECTUS_AUTH_COOKIE_NAME,
   getAccessToken,
   SessionIdentifier,
-} from "$directus/auth.ts";
+} from "@/utils/directus/auth.ts";
 
 const pathnameWithSession = [
   "/",

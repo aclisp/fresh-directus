@@ -1,4 +1,4 @@
-import { SessionIdentifier } from "$directus/auth.ts";
+import { SessionIdentifier } from "@/utils/directus/auth.ts";
 
 export interface State {
   uid: SessionIdentifier;

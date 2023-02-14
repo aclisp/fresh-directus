@@ -1,6 +1,6 @@
-import { DIRECTUS_HOST } from "../utils/directus/transport.ts";
+import { DIRECTUS_HOST } from "@/utils/directus/transport.ts";
 import { useState } from "preact/hooks";
-import { NavbarProps } from "./Navbar.tsx";
+import { NavbarProps } from "@/islands/Navbar.tsx";
 
 export default function NabarWithUserAvatar(props: NavbarProps) {
   const [menu1, setMenu1] = useState(false);

@@ -12,9 +12,9 @@ import twindConfig from "./twind.config.ts";
 
 import * as log from "$std/log/mod.ts";
 import { format } from "$std/datetime/mod.ts";
-import { dumpStorage, loadStorage } from "$directus/storage.ts";
+import { dumpStorage, loadStorage } from "@/utils/directus/storage.ts";
 
-await log.setup({
+log.setup({
   handlers: {
     console: new log.handlers.ConsoleHandler("DEBUG", {
       formatter: (r) =>

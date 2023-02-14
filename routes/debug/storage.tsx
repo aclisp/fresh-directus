@@ -1,6 +1,6 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
-import { SessionIdentifier } from "$directus/auth.ts";
-import { listStorageValues, StorageValue } from "$directus/storage.ts";
+import { SessionIdentifier } from "@/utils/directus/auth.ts";
+import { listStorageValues, StorageValue } from "@/utils/directus/storage.ts";
 
 interface StorageData {
   items: Array<[SessionIdentifier, StorageValue]>;
