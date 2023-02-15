@@ -1,7 +1,8 @@
 {
   "tasks": {
     "fmt": "deno fmt",
-    "start": "deno run -A --watch=static/,routes/ dev.ts"
+    "start": "deno run -A --watch=static/,routes/ dev.ts",
+    "prod": "DENO_DEPLOYMENT_ID=$(git rev-parse HEAD) deno run -A main.ts"
   },
   "importMap": "./import_map.json",
   "compilerOptions": {

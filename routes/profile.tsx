@@ -2,8 +2,8 @@ import { Handlers, PageProps } from "$fresh/server.ts";
 import { getCurrentUserInfo, UserInfo } from "@/utils/directus/users.ts";
 import { DIRECTUS_HOST } from "@/utils/directus/transport.ts";
 import { State } from "@/utils/types.ts";
-import Navbar from "@/islands/Navbar.tsx";
 import { Head } from "$fresh/runtime.ts";
+import { assets } from "../utils/directus/assets.ts";
 
 interface ProfileData {
   userInfo: UserInfo;
@@ -25,10 +25,9 @@ export default function Profile({ data }: PageProps<ProfileData>) {
       <Head>
         <title>个人信息</title>
       </Head>
-      <Navbar avatar={data.userInfo.avatar} token={data.accessToken} />
       <div class="mt-10 text-center">
         <img
-          src={getAvatar(data)}
+          src={assets(data.userInfo.avatar, { accessToken: data.accessToken })}
           class="rounded-full w-32 mb-4 mx-auto"
           alt="Avatar"
         />
@@ -39,9 +38,4 @@ export default function Profile({ data }: PageProps<ProfileData>) {
       </div>
     </>
   );
-}
-
-function getAvatar(data: ProfileData): string {
-  return DIRECTUS_HOST + "/assets/" + data.userInfo.avatar +
-    "?access_token=" + data.accessToken;
 }

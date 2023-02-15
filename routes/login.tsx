@@ -11,6 +11,7 @@ import { DIRECTUS_HOST } from "@/utils/directus/transport.ts";
 import { getCurrentUserInfo, UserInfo } from "@/utils/directus/users.ts";
 import { delStorageValue } from "@/utils/directus/storage.ts";
 import { randomUUID } from "@/utils/uuid.ts";
+import { assets } from "@/utils/directus/assets.ts";
 
 function logger() {
   return getLogger("routes/login");
@@ -220,7 +221,10 @@ function LoginSuccess(props: { data: LoginData }) {
       </p>
       <div class="mt-12 mb-6 flex justify-center">
         <img
-          src={getAvatar(props.data)}
+          src={assets(props.data.userInfo?.avatar, {
+            accessToken: props.data.loginResult?.access_token,
+            altUrl: "/anonymous-avatar-icon-25.jpeg",
+          })}
           class="rounded-full w-24 h-24 shadow-lg"
           alt="smaple image"
         />
@@ -232,14 +236,4 @@ function LoginSuccess(props: { data: LoginData }) {
       </p>
     </>
   );
-}
-
-function getAvatar(data: LoginData): string {
-  if (!data.userInfo?.avatar) {
-    return "https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(10).webp";
-  } else {
-    return DIRECTUS_HOST + "/assets/" + data.userInfo.avatar +
-      "?access_token=" +
-      data.loginResult?.access_token;
-  }
 }

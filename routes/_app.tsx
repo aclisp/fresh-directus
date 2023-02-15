@@ -17,6 +17,9 @@ export default function App({ Component }: AppProps) {
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css"
         />
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js">
+        </script>
       </Head>
       <Component />
     </>

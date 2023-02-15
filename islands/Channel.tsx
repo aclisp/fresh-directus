@@ -1,10 +1,13 @@
 import { useEffect, useRef, useState } from "preact/hooks";
 import { io } from "socket.io-client";
 import { DIRECTUS_HOST } from "@/utils/directus/transport.ts";
+import { UserInfo } from "@/utils/directus/users.ts";
+import { assets } from "@/utils/directus/assets.ts";
 
 interface ChannelProps {
-  token: string;
   channel: string;
+  userInfo: UserInfo;
+  accessToken: string;
 }
 
 let counter = 0;
@@ -20,7 +23,7 @@ export default function Channel(props: ChannelProps) {
     const socket = io(DIRECTUS_HOST, {
       //transports: ["polling"],
       auth: {
-        token: props.token,
+        token: props.accessToken,
         channel: props.channel,
       },
     });
@@ -81,7 +84,15 @@ export default function Channel(props: ChannelProps) {
       <div class="flex flex-col justify-center items-center">
         <div class="lg:flex lg:flex-row">
           <div class="block rounded-lg shadow-lg bg-white max-w-sm text-center">
-            <div class="py-3 px-6 border-b border-gray-300 flex justify-center">
+            <div class="py-3 px-6 border-b border-gray-300 flex justify-center items-center">
+              <img
+                src={assets(props.userInfo?.avatar, {
+                  accessToken: props.accessToken,
+                  altUrl: "/anonymous-avatar-icon-25.jpeg",
+                })}
+                class="rounded-full w-8 h-8 mr-1"
+                alt="Avatar"
+              />
               <span class="px-4 py-2 rounded-full border border-gray-300 text-gray-500 font-semibold text-sm flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease">
                 {props.channel ?? "Not in a channel"}
               </span>
@@ -146,10 +157,10 @@ function PushData(props: { dataList: Array<Record<string, unknown>> }) {
                   <td class="px-6 py-2 whitespace-nowrap text-sm font-medium text-gray-900">
                     {String(data._counter)}
                   </td>
-                  <td class="text-sm text-gray-900 font-light px-6 py-2 whitespace-normal max-w-[9rem] lg:max-w-lg truncate">
+                  <td class="text-sm text-gray-900 font-light px-6 py-2 whitespace-normal max-w-[12rem] lg:max-w-lg truncate">
                     {JSON.stringify(extractData(data))}
                   </td>
-                  <td class="text-sm text-gray-900 font-light px-6 py-2 whitespace-normal">
+                  <td class="text-sm text-gray-900 font-light px-6 py-2 whitespace-normal max-w-[8rem] lg:max-w-lg">
                     {(data._time as Date).toLocaleString()}
                   </td>
                 </tr>
