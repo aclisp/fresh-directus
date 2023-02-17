@@ -23,7 +23,7 @@ export default function Explore() {
     <div class="flex flex-col w-full sm:max-w-screen-sm mx-auto">
       <Header left="back" name="通讯录" right="plus" />
 
-      <div class="w-full flex flex-col gap-2.5 bg-slate-100 border-b-1">
+      <div class="w-full flex flex-col gap-2.5 bg-gray-100 border-b-1">
         <ListGroup>
           <ListItem name="服务" />
         </ListGroup>
@@ -98,7 +98,7 @@ function Header(props: {
     <>
       {/* Header */}
       <div
-        class="fixed top-0 bg-slate-100 h-14 flex items-center"
+        class="fixed top-0 bg-gray-100 h-14 flex items-center"
         style="width: inherit; max-width: inherit"
       >
         <div class="relative grow">
@@ -147,7 +147,7 @@ function Footer() {
       <div class="w-full h-14"></div>
       {/* Footer */}
       <div
-        class="fixed bottom-0 bg-slate-100 h-14 flex justify-around items-center"
+        class="fixed bottom-0 bg-gray-100 h-14 flex justify-around items-center"
         style="width: inherit; max-width: inherit"
       >
         <FooterTabItem url="#chat" name="微信" icon="chat" active />
@@ -172,11 +172,11 @@ function FooterTabItem(props: {
         {/* Icon */}
         <Icon
           class={`w-7 h-7 stroke-1 ${
-            props.active ? "fill-green-500 stroke-green-500" : ""
+            props.active ? "fill-blue-600 stroke-blue-600" : ""
           }`}
         />
         {/* Text */}
-        <p class={`text-[0.6rem] ${props.active ? "text-green-500" : ""}`}>
+        <p class={`text-[0.6rem] ${props.active ? "text-blue-600" : ""}`}>
           {props.name}
         </p>
       </div>

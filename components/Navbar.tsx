@@ -21,7 +21,7 @@ export function Navbar(props: NavbarProps) {
   flex flex-wrap
   items-center
   justify-between
-  py-4
+  py-1.5
   bg-gray-100
   text-gray-500
   hover:text-gray-700
@@ -72,9 +72,9 @@ export function Navbar(props: NavbarProps) {
           <Logo />
           {/* Left links */}
           <ul class="navbar-nav flex flex-col pl-0 list-none mr-auto">
-            <NavItem name="Dashboard" url="#" />
-            <NavItem name="Team" url="#" />
-            <NavItem name="Projects" url="#" />
+            <NavItem name="Explore" url="/debug/explore" />
+            <NavItem name="Play" url="/debug/play" />
+            <NavItem name="Profile" url="/profile" />
           </ul>
           {/* Left links */}
         </div>
@@ -133,7 +133,7 @@ function NavItem(props: MenuItemProps) {
 function ButtonLogin() {
   return (
     <a
-      class="px-4 py-1 text-sm text-purple-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-purple-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2"
+      class="px-4 py-1 text-sm text-blue-600 font-semibold rounded-full border border-blue-200 hover:text-white hover:bg-blue-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2"
       style={buttonLike}
       href="/login"
     >
