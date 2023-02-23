@@ -106,7 +106,7 @@ function Header(props: {
           <HeaderLeftItem icon={props.left} />
           {/* Title */}
           <div class="flex justify-center py-2">
-            <h1 class="font-medium">{props.name}</h1>
+            <div class="font-medium">{props.name}</div>
           </div>
           {/* Right part */}
           <HeaderRightItem icon={props.right} />

@@ -15,63 +15,46 @@ interface MenuItemProps {
 
 export function Navbar(props: NavbarProps) {
   return (
-    <nav class="
-  relative
-  w-full
-  flex flex-wrap
-  items-center
-  justify-between
-  py-1.5
-  bg-gray-100
-  text-gray-500
-  hover:text-gray-700
-  focus:text-gray-700
-  shadow-lg
-  navbar navbar-expand-lg navbar-light
-  ">
-      <div class="w-full flex flex-wrap items-center justify-between px-6">
+    <nav
+      class="flex-no-wrap relative flex w-full items-center justify-between bg-neutral-100 py-1.5 shadow-md shadow-black/5 dark:bg-neutral-600 dark:shadow-black/10 lg:flex-wrap lg:justify-start"
+      data-te-navbar-ref
+    >
+      <div class="flex w-full flex-wrap items-center justify-between px-6">
         <button
-          class="
-      navbar-toggler
-      text-gray-500
-      border-0
-      hover:shadow-none hover:no-underline
-      py-2
-      px-2.5
-      bg-transparent
-      focus:outline-none focus:ring-0 focus:shadow-none focus:no-underline
-    "
+          class="block border-0 bg-transparent py-2 px-2.5 text-neutral-500 hover:no-underline hover:shadow-none focus:no-underline focus:shadow-none focus:outline-none focus:ring-0 dark:text-neutral-200 lg:hidden"
           type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
+          data-te-collapse-init
+          data-te-target="#navbarSupportedContent1"
+          aria-controls="navbarSupportedContent1"
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <svg
-            aria-hidden="true"
-            focusable="false"
-            data-prefix="fas"
-            data-icon="bars"
-            class="w-6"
-            role="img"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 448 512"
-          >
-            <path
+          <span class="[&>svg]:w-7">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
               fill="currentColor"
-              d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"
+              class="h-7 w-7"
             >
-            </path>
-          </svg>
+              <path
+                fill-rule="evenodd"
+                d="M3 6.75A.75.75 0 013.75 6h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 6.75zM3 12a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 12zm0 5.25a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75a.75.75 0 01-.75-.75z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </span>
         </button>
         <div
-          class="collapse navbar-collapse flex-grow items-center"
-          id="navbarSupportedContent"
+          class="!visible hidden flex-grow basis-[100%] items-center lg:!flex lg:basis-auto"
+          id="navbarSupportedContent1"
+          data-te-collapse-item
         >
           <Logo />
           {/* Left links */}
-          <ul class="navbar-nav flex flex-col pl-0 list-none mr-auto">
+          <ul
+            class="list-none mr-auto flex flex-col pl-0 lg:flex-row"
+            data-te-navbar-nav-ref
+          >
             <NavItem name="Explore" url="/debug/explore" />
             <NavItem name="Play" url="/debug/play" />
             <NavItem name="Profile" url="/profile" />
@@ -81,9 +64,8 @@ export function Navbar(props: NavbarProps) {
         {/* Collapsible wrapper */}
 
         {/* Right elements */}
-        <div class="flex items-center relative">
+        <div class="relative flex items-center">
           {/* Icon */}
-          {/* <IconBell /> */}
           {props.userInfo ? <MyAvatar {...props} /> : <ButtonLogin />}
         </div>
         {/* Right elements */}
@@ -95,16 +77,7 @@ export function Navbar(props: NavbarProps) {
 function Logo() {
   return (
     <a
-      class="
-flex
-items-center
-text-gray-900
-hover:text-gray-900
-focus:text-gray-900
-mt-2
-lg:mt-0
-mr-1
-"
+      class="mt-2 mr-2 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:mt-0"
       href="#"
     >
       <img
@@ -119,10 +92,11 @@ mr-1
 
 function NavItem(props: MenuItemProps) {
   return (
-    <li class="nav-item p-2">
+    <li class="lg:pr-2" data-te-nav-item-ref>
       <a
-        class="nav-link text-gray-500 hover:text-gray-700 focus:text-gray-700 p-0"
+        class="text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-zinc-400"
         href={props.url}
+        data-te-nav-link-ref
       >
         {props.name}
       </a>
@@ -144,13 +118,13 @@ function ButtonLogin() {
 
 function MyAvatar(props: NavbarProps) {
   return (
-    <div class="dropdown relative">
+    <div class="relative" data-te-dropdown-ref>
       <a
-        class="dropdown-toggle flex items-center hidden-arrow"
+        class="hidden-arrow flex items-center whitespace-nowrap transition duration-150 ease-in-out motion-reduce:transition-none"
         href="#"
         id="dropdownMenuButton2"
         role="button"
-        data-bs-toggle="dropdown"
+        data-te-dropdown-toggle-ref
         aria-expanded="false"
       >
         <img
@@ -176,86 +150,15 @@ function MyAvatar(props: NavbarProps) {
   );
 }
 
-function IconBell() {
-  return (
-    <div class="dropdown relative">
-      <a
-        class="
-          text-gray-500
-          hover:text-gray-700
-          focus:text-gray-700
-          mr-4
-          dropdown-toggle
-          hidden-arrow
-          flex items-center
-        "
-        href="#"
-        id="dropdownMenuButton1"
-        role="button"
-        data-bs-toggle="dropdown"
-        aria-expanded="false"
-      >
-        <svg
-          aria-hidden="true"
-          focusable="false"
-          data-prefix="fas"
-          data-icon="bell"
-          class="w-5"
-          role="img"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 448 512"
-        >
-          <path
-            fill="currentColor"
-            d="M224 512c35.32 0 63.97-28.65 63.97-64H160.03c0 35.35 28.65 64 63.97 64zm215.39-149.71c-19.32-20.76-55.47-51.99-55.47-154.29 0-77.7-54.48-139.9-127.94-155.16V32c0-17.67-14.32-32-31.98-32s-31.98 14.33-31.98 32v20.84C118.56 68.1 64.08 130.3 64.08 208c0 102.3-36.15 133.53-55.47 154.29-6 6.45-8.66 14.16-8.61 21.71.11 16.4 12.98 32 32.1 32h383.8c19.12 0 32-15.6 32.1-32 .05-7.55-2.61-15.27-8.61-21.71z"
-          >
-          </path>
-        </svg>
-        <span class="text-white bg-red-700 absolute rounded-full text-xs -mt-2.5 ml-2 py-0 px-1.5">
-          1
-        </span>
-      </a>
-      <DropdownMenu
-        labelledBy="dropdownMenuButton1"
-        menuItems={[
-          { name: "Action", url: "#" },
-          { name: "Another action", url: "#" },
-          { name: "Something else here", url: "#" },
-        ]}
-      />
-    </div>
-  );
-}
-
 function DropdownMenu(props: {
   labelledBy: string;
   menuItems: MenuItemProps[];
 }) {
   return (
     <ul
-      class="
-      dropdown-menu
-      min-w-max
-      absolute
-      hidden
-      bg-white
-      text-base
-      z-50
-      float-left
-      py-2
-      list-none
-      text-left
-      rounded-lg
-      shadow-lg
-      mt-1
-      hidden
-      m-0
-      bg-clip-padding
-      border-none
-      left-auto
-      right-0
-    "
+      class="absolute left-auto right-0 z-[1000] float-left m-0 mt-1 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
       aria-labelledby={props.labelledBy}
+      data-te-dropdown-menu-ref
     >
       {props.menuItems.map((menuItem) => <DropdownMenuItem {...menuItem} />)}
     </ul>
@@ -266,20 +169,9 @@ function DropdownMenuItem(props: MenuItemProps) {
   return (
     <li>
       <a
-        class="
-        dropdown-item
-        text-sm
-        py-2
-        px-4
-        font-normal
-        block
-        w-full
-        whitespace-nowrap
-        bg-transparent
-        text-gray-700
-        hover:bg-gray-100
-      "
+        class="block w-full whitespace-nowrap bg-transparent py-2 px-4 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
         href={props.url}
+        data-te-dropdown-item-ref
       >
         {props.name}
       </a>
