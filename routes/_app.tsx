@@ -5,7 +5,8 @@ export default function App({ Component }: AppProps) {
   return (
     <>
       <Head>
-        <link
+        {
+          /* <link
           href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap"
           rel="stylesheet"
         />
@@ -15,7 +16,9 @@ export default function App({ Component }: AppProps) {
         />
         <script src="https://cdn.tailwindcss.com/3.2.4"></script>
         <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js">
-        </script>
+        </script> */
+        }
+        <script src="https://cdn.tailwindcss.com/3.2.6?plugins=forms"></script>
       </Head>
       <Component />
     </>

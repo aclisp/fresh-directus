@@ -32,6 +32,11 @@ export default function Explore() {
           <ListItem name="朋友圈" value="有新内容" />
           <ListItem name="视频号" value="直播中" />
           <ListItem name="卡包" value="需要充值" url="#" />
+          <ListItem
+            name="地址"
+            value="广州市海珠区东晓南路南华花园"
+            url="#"
+          />
           <ListItem name="表情" value="上新" url="#" />
         </ListGroup>
         <ListGroup>
@@ -53,14 +58,14 @@ function ListItem(props: {
     return (
       <a href="#" class="block pl-4 pr-2 py-4">
         <div class="flex justify-between">
-          <div>
+          <div class="min-w-[30%]">
             {props.name}
           </div>
           <div class="flex">
             <div class="text-gray-500">
               {props.value}
             </div>
-            <IconChevronRight class="stroke-gray-400 ml-1 stroke-[1.5]" />
+            <IconChevronRight class="stroke-gray-400 ml-1 stroke-[1.5] min-w-fit" />
           </div>
         </div>
       </a>
