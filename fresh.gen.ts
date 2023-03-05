@@ -15,11 +15,15 @@ import * as $8 from "./routes/debug/storage.tsx";
 import * as $9 from "./routes/del__login.tsx";
 import * as $10 from "./routes/index.tsx";
 import * as $11 from "./routes/login.tsx";
-import * as $12 from "./routes/profile.tsx";
-import * as $13 from "./routes/sub.tsx";
-import * as $$0 from "./islands/Channel.tsx";
-import * as $$1 from "./islands/Counter.tsx";
-import * as $$2 from "./islands/FormulaCalculator.tsx";
+import * as $12 from "./routes/logout.tsx";
+import * as $13 from "./routes/profile.tsx";
+import * as $14 from "./routes/sub.tsx";
+import * as $$0 from "./islands/AfxHeader.tsx";
+import * as $$1 from "./islands/Channel.tsx";
+import * as $$2 from "./islands/Counter.tsx";
+import * as $$3 from "./islands/FormulaCalculator.tsx";
+import * as $$4 from "./islands/InfoModal.tsx";
+import * as $$5 from "./islands/ScriptFooter.tsx";
 
 const manifest = {
   routes: {
@@ -35,13 +39,17 @@ const manifest = {
     "./routes/del__login.tsx": $9,
     "./routes/index.tsx": $10,
     "./routes/login.tsx": $11,
-    "./routes/profile.tsx": $12,
-    "./routes/sub.tsx": $13,
+    "./routes/logout.tsx": $12,
+    "./routes/profile.tsx": $13,
+    "./routes/sub.tsx": $14,
   },
   islands: {
-    "./islands/Channel.tsx": $$0,
-    "./islands/Counter.tsx": $$1,
-    "./islands/FormulaCalculator.tsx": $$2,
+    "./islands/AfxHeader.tsx": $$0,
+    "./islands/Channel.tsx": $$1,
+    "./islands/Counter.tsx": $$2,
+    "./islands/FormulaCalculator.tsx": $$3,
+    "./islands/InfoModal.tsx": $$4,
+    "./islands/ScriptFooter.tsx": $$5,
   },
   baseUrl: import.meta.url,
   config,

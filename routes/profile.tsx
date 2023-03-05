@@ -1,9 +1,9 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
 import { getCurrentUserInfo, UserInfo } from "@/utils/directus/users.ts";
-import { DIRECTUS_HOST } from "@/utils/directus/transport.ts";
 import { State } from "@/utils/types.ts";
-import { Head } from "$fresh/runtime.ts";
-import { assets } from "../utils/directus/assets.ts";
+import { assets } from "@/utils/directus/assets.ts";
+import { AfxAppFrame } from "@/components/AfxAppFrame.tsx";
+import AfxHeader from "@/islands/AfxHeader.tsx";
 
 interface ProfileData {
   userInfo: UserInfo;
@@ -21,10 +21,8 @@ export const handler: Handlers<ProfileData, State> = {
 
 export default function Profile({ data }: PageProps<ProfileData>) {
   return (
-    <>
-      <Head>
-        <title>个人信息</title>
-      </Head>
+    <AfxAppFrame>
+      <AfxHeader name="用户信息" placeholder icon="logout" url="/logout" />
       <div class="mt-10 text-center">
         <img
           src={assets(data.userInfo.avatar, { accessToken: data.accessToken })}
@@ -36,6 +34,6 @@ export default function Profile({ data }: PageProps<ProfileData>) {
         </h5>
         <p class="text-gray-500">Web designer</p>
       </div>
-    </>
+    </AfxAppFrame>
   );
 }
