@@ -88,13 +88,8 @@ export default function Login({ data }: PageProps<LoginData>) {
   }
   return (
     <>
-      <InfoModal
-        show={showLoginFailure}
-        info={data.loginResult?.msg!}
-        confirm="OK"
-      />
       <AfxAppFrame>
-        <AfxHeader name="用户登录" />
+        <AfxHeader name="登录" />
         <form method="POST">
           <div class="flex flex-col h-screen justify-center mx-12 gap-6">
             <AfxFormInput
@@ -116,6 +111,12 @@ export default function Login({ data }: PageProps<LoginData>) {
           </div>
         </form>
       </AfxAppFrame>
+      <InfoModal
+        show={showLoginFailure}
+        title="Error"
+        message={data.loginResult?.msg!}
+        action="OK"
+      />
     </>
   );
 }

@@ -28,7 +28,7 @@ export default function Home({ data }: PageProps<HomeData>) {
   return (
     <AfxAppFrame>
       <Header
-        name="在线工具箱"
+        name="主页"
         userInfo={data?.userInfo}
         accessToken={data?.accessToken}
       />

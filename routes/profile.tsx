@@ -22,7 +22,7 @@ export const handler: Handlers<ProfileData, State> = {
 export default function Profile({ data }: PageProps<ProfileData>) {
   return (
     <AfxAppFrame>
-      <AfxHeader name="用户信息" placeholder icon="logout" url="/logout" />
+      <AfxHeader name="个人信息" placeholder icon="logout" url="/logout" />
       <div class="mt-10 text-center">
         <img
           src={assets(data.userInfo.avatar, { accessToken: data.accessToken })}
