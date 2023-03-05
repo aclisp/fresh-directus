@@ -1,22 +1,4 @@
-import IconChevronLeft from "tabler-icons/chevron-left.tsx";
-import IconCirclePlus from "tabler-icons/circle-plus.tsx";
-import IconUser from "tabler-icons/user.tsx";
-import IconBrandSafari from "tabler-icons/brand-safari.tsx";
-import IconAddressBook from "tabler-icons/address-book.tsx";
-import IconMessageCircle2 from "tabler-icons/message-circle-2.tsx";
-import IconLogout from "tabler-icons/logout.tsx";
-
-const icons = {
-  back: IconChevronLeft,
-  plus: IconCirclePlus,
-  user: IconUser,
-  explore: IconBrandSafari,
-  address: IconAddressBook,
-  chat: IconMessageCircle2,
-  logout: IconLogout,
-};
-
-type IconEnum = keyof typeof icons;
+import { IconEnum, icons } from "@/utils/icons.ts";
 
 export default function AfxHeader(props: {
   name: string;

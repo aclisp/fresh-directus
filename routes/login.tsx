@@ -113,7 +113,8 @@ export default function Login({ data }: PageProps<LoginData>) {
       </AfxAppFrame>
       <InfoModal
         show={showLoginFailure}
-        title="Error"
+        type="error"
+        title="Login failure"
         message={data.loginResult?.msg!}
         action="OK"
       />
