@@ -62,7 +62,7 @@ function Header(props: {
     <>
       {/* Header */}
       <div
-        class="fixed top-0 bg-gray-100 h-14 flex items-center"
+        class="fixed top-0 bg-gray-100 h-11 flex items-center"
         style="width: inherit; max-width: inherit"
       >
         <div class="relative grow">
@@ -80,7 +80,7 @@ function Header(props: {
         </div>
       </div>
       {/* Header Placeholder */}
-      <div class="w-full h-14"></div>
+      <div class="w-full h-11"></div>
     </>
   );
 }

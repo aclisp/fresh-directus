@@ -10,7 +10,7 @@ export default function AfxHeader(props: {
     <>
       {/* Header */}
       <div
-        class="fixed top-0 bg-gray-100 h-14 flex items-center"
+        class="fixed top-0 bg-gray-100 h-11 flex items-center"
         style="width: inherit; max-width: inherit"
       >
         <div class="relative grow">
@@ -26,7 +26,7 @@ export default function AfxHeader(props: {
         </div>
       </div>
       {/* Header Placeholder */}
-      {props.placeholder && <div class="w-full h-14"></div>}
+      {props.placeholder && <div class="w-full h-11"></div>}
     </>
   );
 }

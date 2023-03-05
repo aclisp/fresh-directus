@@ -33,8 +33,8 @@ export default function Explore() {
           <ListItem name="视频号" value="直播中" />
           <ListItem name="卡包" value="需要充值" url="#" />
           <ListItem
-            name="地址"
-            value="广州市海珠区东晓南路南华花园"
+            name="地址是一个很远的地方有二万五千里路"
+            value="广州市海珠区东晓南路南华花园兴南三街12号502房，广州市海珠区东晓南路南华花园兴南三街12号502房"
             url="#"
           />
           <ListItem name="表情" value="上新" url="#" />
@@ -57,28 +57,31 @@ function ListItem(props: {
   if (props.url) {
     return (
       <a href="#" class="block pl-4 pr-2 py-4">
-        <div class="flex justify-between">
-          <div class="min-w-[30%]">
+        <div class="flex">
+          <div class="w-48">
             {props.name}
           </div>
-          <div class="flex">
+          <div class="w-full flex justify-end">
             <div class="text-gray-500">
               {props.value}
             </div>
-            <IconChevronRight class="stroke-gray-400 ml-1 stroke-[1.5] min-w-fit" />
+            <IconChevronRight class="stroke-gray-400 ml-1 stroke-[1.5] min-w-[1.5rem]" />
           </div>
         </div>
       </a>
     );
   } else {
     return (
-      <div class="pl-4 pr-9 py-4">
-        <div class="flex justify-between">
-          <div>
+      <div class="pl-4 pr-2 py-4">
+        <div class="flex">
+          <div class="w-48">
             {props.name}
           </div>
-          <div class="text-gray-500">
-            {props.value}
+          <div class="w-full flex justify-end">
+            <div class="text-gray-500">
+              {props.value}
+            </div>
+            <div class="ml-1 min-w-[1.5rem]" />
           </div>
         </div>
       </div>
@@ -103,7 +106,7 @@ function Header(props: {
     <>
       {/* Header */}
       <div
-        class="fixed top-0 bg-gray-100 h-14 flex items-center"
+        class="fixed top-0 bg-gray-100 h-11 flex items-center"
         style="width: inherit; max-width: inherit"
       >
         <div class="relative grow">
@@ -118,7 +121,7 @@ function Header(props: {
         </div>
       </div>
       {/* Header Placeholder */}
-      <div class="w-full h-14"></div>
+      <div class="w-full h-11"></div>
     </>
   );
 }
