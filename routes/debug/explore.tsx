@@ -58,14 +58,14 @@ function ListItem(props: {
     return (
       <a href="#" class="block pl-4 pr-2 py-4">
         <div class="flex">
-          <div class="w-48">
+          <div class="w-48 pr-4">
             {props.name}
           </div>
           <div class="w-full flex justify-end">
             <div class="text-gray-500">
               {props.value}
             </div>
-            <IconChevronRight class="stroke-gray-400 ml-1 stroke-[1.5] min-w-[1.5rem]" />
+            <IconChevronRight class="stroke-gray-400 stroke-[1.5] ml-1 min-w-[1.5rem]" />
           </div>
         </div>
       </a>
@@ -74,7 +74,7 @@ function ListItem(props: {
     return (
       <div class="pl-4 pr-2 py-4">
         <div class="flex">
-          <div class="w-48">
+          <div class="w-48 pr-4">
             {props.name}
           </div>
           <div class="w-full flex justify-end">
