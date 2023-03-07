@@ -11,13 +11,14 @@ import * as $4 from "./routes/api/token.ts";
 import * as $5 from "./routes/debug/explore.tsx";
 import * as $6 from "./routes/debug/formula.tsx";
 import * as $7 from "./routes/debug/play.tsx";
-import * as $8 from "./routes/debug/storage.tsx";
-import * as $9 from "./routes/del__login.tsx";
-import * as $10 from "./routes/index.tsx";
-import * as $11 from "./routes/login.tsx";
-import * as $12 from "./routes/logout.tsx";
-import * as $13 from "./routes/profile.tsx";
-import * as $14 from "./routes/sub.tsx";
+import * as $8 from "./routes/debug/storage-card.tsx";
+import * as $9 from "./routes/debug/storage.tsx";
+import * as $10 from "./routes/del__login.tsx";
+import * as $11 from "./routes/index.tsx";
+import * as $12 from "./routes/login.tsx";
+import * as $13 from "./routes/logout.tsx";
+import * as $14 from "./routes/profile.tsx";
+import * as $15 from "./routes/sub.tsx";
 import * as $$0 from "./islands/AfxHeader.tsx";
 import * as $$1 from "./islands/Channel.tsx";
 import * as $$2 from "./islands/Counter.tsx";
@@ -35,13 +36,14 @@ const manifest = {
     "./routes/debug/explore.tsx": $5,
     "./routes/debug/formula.tsx": $6,
     "./routes/debug/play.tsx": $7,
-    "./routes/debug/storage.tsx": $8,
-    "./routes/del__login.tsx": $9,
-    "./routes/index.tsx": $10,
-    "./routes/login.tsx": $11,
-    "./routes/logout.tsx": $12,
-    "./routes/profile.tsx": $13,
-    "./routes/sub.tsx": $14,
+    "./routes/debug/storage-card.tsx": $8,
+    "./routes/debug/storage.tsx": $9,
+    "./routes/del__login.tsx": $10,
+    "./routes/index.tsx": $11,
+    "./routes/login.tsx": $12,
+    "./routes/logout.tsx": $13,
+    "./routes/profile.tsx": $14,
+    "./routes/sub.tsx": $15,
   },
   islands: {
     "./islands/AfxHeader.tsx": $$0,

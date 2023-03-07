@@ -42,6 +42,13 @@ export default function Explore() {
         <ListGroup>
           <ListItem name="设置" />
         </ListGroup>
+        <ListGroup>
+          <ListItem name="收藏" url="#" />
+          <ListItem name="收藏" url="#" />
+          <ListItem name="收藏" url="#" />
+          <ListItem name="收藏" url="#" />
+          <ListItem name="收藏" url="#" />
+        </ListGroup>
       </div>
 
       <Footer />
