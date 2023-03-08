@@ -1,12 +1,14 @@
 import { getLogger } from "$std/log/mod.ts";
 import { readLines } from "$std/io/read_lines.ts";
-import { LoginInfo, SessionIdentifier } from "./auth.ts";
+import { SessionIdentifier } from "./auth.ts";
 
 export const STORAGE_FILE = "storage.txt";
 
-export interface StorageValue extends LoginInfo {
-  accessTokenExpiresAt: number;
-  refreshTokenExpiresAt: number;
+export interface StorageValue {
+  access_token: string;
+  refresh_token: string;
+  /** UTC seconds when this value expires */
+  expires_at: number;
 }
 
 const storage = new Map<SessionIdentifier, StorageValue>();
@@ -64,7 +66,7 @@ export function shrinkStorage() {
 }
 
 function stale(value: StorageValue, now: number): boolean {
-  return value.refreshTokenExpiresAt < now - 30000;
+  return value.expires_at * 1000 < now - 30000;
 }
 
 export async function dumpStorage() {

@@ -1,6 +1,7 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
 import { SessionIdentifier } from "@/utils/directus/auth.ts";
 import { listStorageValues, StorageValue } from "@/utils/directus/storage.ts";
+import { jwtDecode } from "@/utils/jwt.ts";
 
 interface StorageData {
   items: Array<[SessionIdentifier, StorageValue]>;
@@ -80,10 +81,11 @@ export default function StoragePage({ data }: PageProps<StorageData>) {
                         {value.refresh_token.substring(0, 20)}
                       </td>
                       <td class="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
-                        {new Date(value.accessTokenExpiresAt).toLocaleString()}
+                        {new Date(jwtDecode(value.access_token).exp! * 1000)
+                          .toLocaleString()}
                       </td>
                       <td class="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
-                        {new Date(value.refreshTokenExpiresAt).toLocaleString()}
+                        {new Date(value.expires_at * 1000).toLocaleString()}
                       </td>
                     </tr>
                   ),

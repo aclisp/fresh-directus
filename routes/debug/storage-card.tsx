@@ -3,6 +3,7 @@ import { SessionIdentifier } from "@/utils/directus/auth.ts";
 import { listStorageValues, StorageValue } from "@/utils/directus/storage.ts";
 import { AfxAppFrame } from "@/components/AfxAppFrame.tsx";
 import AfxHeader from "@/islands/AfxHeader.tsx";
+import { jwtDecode } from "@/utils/jwt.ts";
 
 type StorageItem = [SessionIdentifier, StorageValue];
 
@@ -32,6 +33,7 @@ export default function StoragePage({ data }: PageProps<StorageData>) {
 function Item(props: { item: StorageItem; index: number }) {
   const { item, index } = props;
   const [session_id, v] = item;
+  const { exp = 0, id } = jwtDecode(v.access_token);
   return (
     <div class="card mx-2 mt-2 bg-base-100 shadow rounded">
       <div class="card-body">
@@ -47,13 +49,13 @@ function Item(props: { item: StorageItem; index: number }) {
         />
         <Field
           name="访问过期"
-          value={new Date(v.accessTokenExpiresAt).toLocaleString()}
+          value={new Date(exp * 1000).toLocaleString()}
         />
         <Field
           name="刷新过期"
-          value={new Date(v.refreshTokenExpiresAt).toLocaleString()}
+          value={new Date(v.expires_at * 1000).toLocaleString()}
         />
-        <Field name="用户ID" value={v.user_id} />
+        <Field name="用户ID" value={id} />
       </div>
     </div>
   );

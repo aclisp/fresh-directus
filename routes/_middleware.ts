@@ -31,7 +31,7 @@ export async function handler(
     sessionId = getCookies(req.headers)[DIRECTUS_AUTH_COOKIE_NAME];
     try {
       const accessToken = await getAccessToken(sessionId, (storageValue) => {
-        expires = storageValue.refreshTokenExpiresAt;
+        expires = storageValue.expires_at * 1000;
       });
       ctx.state = { sessionId, accessToken };
     } catch (error) {

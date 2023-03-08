@@ -1,6 +1,6 @@
+import { jwtDecode } from "../jwt.ts";
 import { getStorageValue, setStorageValue, StorageValue } from "./storage.ts";
 import { httpPost, Result } from "./transport.ts";
-import { getCurrentUserInfo } from "./users.ts";
 
 export const DIRECTUS_AUTH_COOKIE_NAME = "_sid";
 export const DIRECTUS_AUTH_COOKIE_MAX_AGE_SECONDS = 7 * 24 * 60 * 60;
@@ -8,7 +8,6 @@ export const DIRECTUS_AUTH_COOKIE_MAX_AGE_SECONDS = 7 * 24 * 60 * 60;
 export type SessionIdentifier = string;
 
 export interface LoginInfo {
-  user_id: string;
   access_token: string;
   expires: number;
   refresh_token: string;
@@ -20,34 +19,24 @@ export async function login(
   email: string,
   password: string,
 ): Promise<LoginResult> {
-  const result = await httpPost<LoginResult>("/auth/login", {
+  return await httpPost<LoginResult>("/auth/login", {
     email: email,
     password: password,
   }, {
     noAuthorizationHeader: true,
     accessToken: null,
   });
-  if (result.ok) {
-    const userInfo = await getCurrentUserInfo(result.access_token);
-    result.user_id = userInfo.id;
-  }
-  return result;
 }
 
 export function updateStorage(
   sessionId: SessionIdentifier,
   loginResult: LoginResult,
 ): StorageValue {
-  const now = Date.now();
-  const expiresAt = now + DIRECTUS_AUTH_COOKIE_MAX_AGE_SECONDS * 1000;
   const value: StorageValue = {
-    user_id: loginResult.user_id,
-    expires: loginResult.expires,
     access_token: loginResult.access_token,
     refresh_token: loginResult.refresh_token,
-    accessTokenExpiresAt: now + loginResult.expires,
-    //accessTokenExpiresAt: now + 60000,
-    refreshTokenExpiresAt: expiresAt,
+    expires_at: Math.trunc(Date.now() / 1000) +
+      DIRECTUS_AUTH_COOKIE_MAX_AGE_SECONDS,
   };
   setStorageValue(sessionId, value);
   return value;
@@ -68,8 +57,8 @@ export async function getAccessToken(
   if (!storageValue) {
     throw new NeedLoginError("never login");
   }
-  const expiresAt = storageValue.accessTokenExpiresAt;
-  if (+expiresAt < Date.now() + 30000) {
+  const expiresAt = 1000 * jwtDecode(storageValue.access_token).exp!;
+  if (expiresAt < Date.now() + 30000) {
     const refreshToken = storageValue.refresh_token;
     const loginResult = await refresh(refreshToken);
     if (loginResult.ok) {

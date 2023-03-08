@@ -11,6 +11,7 @@
     "twind": "https://esm.sh/twind@0.16.17",
     "twind/": "https://esm.sh/twind@0.16.17/",
     "socket.io-client": "https://cdn.socket.io/4.5.4/socket.io.esm.min.js",
-    "tabler-icons/": "https://deno.land/x/tabler_icons_tsx@0.0.2/tsx/"
+    "tabler-icons/": "https://deno.land/x/tabler_icons_tsx@0.0.2/tsx/",
+    "jsonwebtoken": "https://esm.sh/jsonwebtoken@9.0.0"
   }
 }

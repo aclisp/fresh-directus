@@ -71,7 +71,7 @@ export const handler: Handlers<LoginData> = {
     setCookie(resp.headers, {
       name: DIRECTUS_AUTH_COOKIE_NAME,
       value: newSid,
-      expires: storageValue.refreshTokenExpiresAt,
+      expires: storageValue.expires_at * 1000,
       path: "/",
       sameSite: "Strict",
       httpOnly: true,

@@ -13,10 +13,8 @@ Deno.test("dumpStorage", async () => {
   for (let i = 0; i < 10; i++) {
     setStorageValue(`${i}`, {
       access_token: `atoken${i}`,
-      expires: 100 + i,
+      expires_at: Math.trunc((now + i) / 1000),
       refresh_token: `rtoken${i}`,
-      accessTokenExpiresAt: 200 + i,
-      refreshTokenExpiresAt: now + i,
     });
   }
   await dumpStorage();
