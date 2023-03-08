@@ -91,6 +91,7 @@ export default function Channel(props: ChannelProps) {
                 })}
                 class="rounded-full w-8 h-8 mr-1"
                 alt="Avatar"
+                loading="lazy"
               />
               <span class="px-4 py-2 rounded-full border border-gray-300 text-gray-500 font-semibold text-sm flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease">
                 {props.channel ?? "Not in a channel"}

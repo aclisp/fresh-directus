@@ -25,7 +25,6 @@ export const handler: Handlers<SubscribeData, State> = {
       return redirectToLogin(req);
     }
     const userInfo = await getCurrentUserInfo(accessToken);
-    logger().debug(`accessToken: ${accessToken}`);
     const resp = await ctx.render({ channel, userInfo, accessToken });
     return resp;
   },

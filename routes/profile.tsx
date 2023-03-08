@@ -32,6 +32,7 @@ export default function Profile({ data }: PageProps<ProfileData>) {
           src={assets(data.userInfo.avatar, { accessToken: data.accessToken })}
           class="rounded-full w-32 mb-4 mx-auto"
           alt="Avatar"
+          loading="lazy"
         />
         <h5 class="text-xl font-medium leading-tight mb-2">
           {data.userInfo.first_name} {data.userInfo.last_name}

@@ -27,7 +27,6 @@ export function setStorageValue(
 export function getStorageValue(
   sessionId: SessionIdentifier,
 ): StorageValue | undefined {
-  logger().debug(`getStorageValue: sessionId=${sessionId}`);
   return storage.get(sessionId);
 }
 
