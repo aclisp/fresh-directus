@@ -15,15 +15,18 @@ function logger() {
   return getLogger("directus/storage");
 }
 
-export function setStorageValue(uid: SessionIdentifier, value: StorageValue) {
-  storage.set(uid, value);
+export function setStorageValue(
+  sessionId: SessionIdentifier,
+  value: StorageValue,
+) {
+  storage.set(sessionId, value);
 }
 
 export function getStorageValue(
-  uid: SessionIdentifier,
+  sessionId: SessionIdentifier,
 ): StorageValue | undefined {
-  logger().debug(`getStorageValue: ${uid}`);
-  return storage.get(uid);
+  logger().debug(`getStorageValue: sessionId=${sessionId}`);
+  return storage.get(sessionId);
 }
 
 export function listStorageValues(
@@ -35,9 +38,9 @@ export function listStorageValues(
     from = 0;
   }
   let index = 0;
-  for (const [uid, value] of storage) {
+  for (const [sid, value] of storage) {
     if (index++ >= from) {
-      result.push([uid, value]);
+      result.push([sid, value]);
     }
   }
   return result;
@@ -47,15 +50,15 @@ export function countStorageValues(): number {
   return storage.size;
 }
 
-export function delStorageValue(uid: SessionIdentifier) {
-  storage.delete(uid);
+export function delStorageValue(sessionId: SessionIdentifier) {
+  storage.delete(sessionId);
 }
 
 export function shrinkStorage() {
   const now = Date.now();
-  for (const [uid, value] of storage) {
+  for (const [sid, value] of storage) {
     if (stale(value, now)) {
-      storage.delete(uid);
+      storage.delete(sid);
     }
   }
 }
@@ -72,8 +75,8 @@ export async function dumpStorage() {
     create: true,
     truncate: true,
   });
-  for (const [uid, value] of storage) {
-    const str = JSON.stringify({ uid, value });
+  for (const [sid, value] of storage) {
+    const str = JSON.stringify({ sid, value });
     const encoder = new TextEncoder();
     const data = encoder.encode(str + "\n");
     await file.write(data);
@@ -86,7 +89,7 @@ export async function loadStorage() {
     const file = await Deno.open(STORAGE_FILE, { read: true });
     for await (const line of readLines(file)) {
       const json = JSON.parse(line);
-      storage.set(json.uid, json.value);
+      storage.set(json.sid, json.value);
     }
     file.close();
 

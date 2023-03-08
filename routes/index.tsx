@@ -13,7 +13,7 @@ interface HomeData {
 
 export const handler: Handlers<HomeData, State> = {
   async GET(req, ctx) {
-    const { uid, accessToken } = ctx.state;
+    const { accessToken } = ctx.state;
     try {
       const userInfo = await getCurrentUserInfo(accessToken);
       const resp = await ctx.render({ userInfo, accessToken });

@@ -1,6 +1,6 @@
 import { SessionIdentifier } from "@/utils/directus/auth.ts";
 
 export interface State {
-  uid: SessionIdentifier;
+  sessionId: SessionIdentifier;
   accessToken: string;
 }

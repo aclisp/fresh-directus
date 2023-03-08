@@ -24,19 +24,19 @@ export async function handler(
   const start = Date.now();
   const { pathname } = new URL(req.url);
   const withSession = pathnameWithSession.includes(pathname);
-  let uid: SessionIdentifier | undefined;
+  let sessionId: SessionIdentifier | undefined;
   let expires: number | undefined;
 
   if (withSession) {
-    uid = getCookies(req.headers)[DIRECTUS_AUTH_COOKIE_NAME];
+    sessionId = getCookies(req.headers)[DIRECTUS_AUTH_COOKIE_NAME];
     try {
-      const accessToken = await getAccessToken(uid, (storageValue) => {
+      const accessToken = await getAccessToken(sessionId, (storageValue) => {
         expires = storageValue.refreshTokenExpiresAt;
       });
-      ctx.state = { uid, accessToken };
+      ctx.state = { sessionId, accessToken };
     } catch (error) {
       log.info(`${error.name}: ${error.message}`);
-      ctx.state = { uid: uid, accessToken: "" };
+      ctx.state = { sessionId, accessToken: "" };
     }
   }
 
@@ -45,7 +45,7 @@ export async function handler(
   if (withSession && expires) {
     setCookie(resp.headers, {
       name: DIRECTUS_AUTH_COOKIE_NAME,
-      value: uid!,
+      value: sessionId!,
       expires,
       path: "/",
       sameSite: "Strict",

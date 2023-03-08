@@ -63,13 +63,13 @@ export default function StoragePage({ data }: PageProps<StorageData>) {
               </thead>
               <tbody>
                 {data.items.map(
-                  ([uid, value], index) => (
+                  ([sid, value], index) => (
                     <tr class="bg-white border-b">
                       <td class="px-6 py-2 whitespace-nowrap text-sm font-medium text-gray-900">
                         {index}
                       </td>
                       <td class="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
-                        {uid}
+                        {sid}
                       </td>
                       <td class="text-sm text-gray-900 font-light px-6 py-2 whitespace-nowrap">
                         {value.access_token.substring(

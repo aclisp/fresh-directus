@@ -57,15 +57,15 @@ export const handler: Handlers<LoginData> = {
       return ctx.render(data);
     }
 
-    // 设置存储，获取到一个随机的 uid
-    const lastUid = getCookies(req.headers)[DIRECTUS_AUTH_COOKIE_NAME];
-    if (lastUid) {
-      delStorageValue(lastUid);
-      logger().debug(`deleted last uid: ${lastUid}`);
+    // 设置存储，获取到一个随机的 sessionId
+    const lastSid = getCookies(req.headers)[DIRECTUS_AUTH_COOKIE_NAME];
+    if (lastSid) {
+      delStorageValue(lastSid);
+      logger().debug(`deleted last sessionId: ${lastSid}`);
     }
-    const newUid = randomUUID();
-    const storageValue = updateStorage(newUid, loginResult);
-    logger().debug(`update storage with new uid: ${newUid}`);
+    const newSid = randomUUID();
+    const storageValue = updateStorage(newSid, loginResult);
+    logger().debug(`update storage with new sessionId: ${newSid}`);
 
     // 获取当前用户的信息
     const userInfo = await getCurrentUserInfo(storageValue.access_token);
@@ -82,10 +82,10 @@ export const handler: Handlers<LoginData> = {
     };
     const resp = await ctx.render(data);
 
-    // 把随机的 uid 种到客户端 Cookie
+    // 把随机的 sessionId 种到客户端 Cookie
     setCookie(resp.headers, {
       name: DIRECTUS_AUTH_COOKIE_NAME,
-      value: newUid,
+      value: newSid,
       expires: storageValue.refreshTokenExpiresAt,
       path: "/",
       sameSite: "Strict",

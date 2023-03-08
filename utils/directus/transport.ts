@@ -14,7 +14,7 @@ export interface TransportOptions {
   accessToken?: string | null;
   /** Global query parameters */
   params?: URLSearchParams;
-  uid?: SessionIdentifier;
+  sessionId?: SessionIdentifier;
 }
 
 function logger() {
@@ -30,12 +30,12 @@ export async function httpPost<T>(
     noAuthorizationHeader = false,
     accessToken,
     params,
-    uid,
+    sessionId,
   } = options;
   logger().debug(`POST ${path}`);
 
-  if (accessToken === undefined && uid) {
-    accessToken = await getAccessToken(uid);
+  if (accessToken === undefined && sessionId) {
+    accessToken = await getAccessToken(sessionId);
   }
   const headers = new Headers({
     "Content-Type": "application/json",
@@ -85,12 +85,12 @@ export async function httpGet<T>(
     noAuthorizationHeader = false,
     accessToken,
     params,
-    uid,
+    sessionId,
   } = options;
   logger().debug(`GET ${path}`);
 
-  if (accessToken === undefined && uid) {
-    accessToken = await getAccessToken(uid);
+  if (accessToken === undefined && sessionId) {
+    accessToken = await getAccessToken(sessionId);
   }
   const headers = new Headers();
   if (!noAuthorizationHeader) {

@@ -5,9 +5,9 @@ import { delStorageValue } from "@/utils/directus/storage.ts";
 
 export const handler: Handlers = {
   GET(req, ctx) {
-    const uid = getCookies(req.headers)[DIRECTUS_AUTH_COOKIE_NAME];
-    if (uid) {
-      delStorageValue(uid);
+    const sessionId = getCookies(req.headers)[DIRECTUS_AUTH_COOKIE_NAME];
+    if (sessionId) {
+      delStorageValue(sessionId);
     }
 
     const resp = new Response(`Redirecting to ...`, {

@@ -13,7 +13,7 @@ import * as $6 from "./routes/debug/formula.tsx";
 import * as $7 from "./routes/debug/play.tsx";
 import * as $8 from "./routes/debug/storage-card.tsx";
 import * as $9 from "./routes/debug/storage.tsx";
-import * as $10 from "./routes/del__login.tsx";
+import * as $10 from "./routes/del--login.tsx";
 import * as $11 from "./routes/index.tsx";
 import * as $12 from "./routes/login.tsx";
 import * as $13 from "./routes/logout.tsx";
@@ -38,7 +38,7 @@ const manifest = {
     "./routes/debug/play.tsx": $7,
     "./routes/debug/storage-card.tsx": $8,
     "./routes/debug/storage.tsx": $9,
-    "./routes/del__login.tsx": $10,
+    "./routes/del--login.tsx": $10,
     "./routes/index.tsx": $11,
     "./routes/login.tsx": $12,
     "./routes/logout.tsx": $13,

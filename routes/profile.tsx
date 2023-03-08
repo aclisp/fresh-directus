@@ -12,7 +12,7 @@ interface ProfileData {
 
 export const handler: Handlers<ProfileData, State> = {
   async GET(req, ctx) {
-    const { uid, accessToken } = ctx.state;
+    const { accessToken } = ctx.state;
     const userInfo = await getCurrentUserInfo(accessToken);
     const resp = await ctx.render({ userInfo, accessToken });
     return resp;

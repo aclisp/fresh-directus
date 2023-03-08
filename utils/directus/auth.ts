@@ -2,7 +2,7 @@ import { getStorageValue, setStorageValue, StorageValue } from "./storage.ts";
 import { httpPost, Result } from "./transport.ts";
 import { getCurrentUserInfo } from "./users.ts";
 
-export const DIRECTUS_AUTH_COOKIE_NAME = "_uid";
+export const DIRECTUS_AUTH_COOKIE_NAME = "_sid";
 export const DIRECTUS_AUTH_COOKIE_MAX_AGE_SECONDS = 7 * 24 * 60 * 60;
 
 export type SessionIdentifier = string;
@@ -35,7 +35,7 @@ export async function login(
 }
 
 export function updateStorage(
-  uid: SessionIdentifier,
+  sessionId: SessionIdentifier,
   loginResult: LoginResult,
 ): StorageValue {
   const now = Date.now();
@@ -49,7 +49,7 @@ export function updateStorage(
     //accessTokenExpiresAt: now + 60000,
     refreshTokenExpiresAt: expiresAt,
   };
-  setStorageValue(uid, value);
+  setStorageValue(sessionId, value);
   return value;
 }
 
@@ -61,10 +61,10 @@ export class NeedLoginError extends Error {
 }
 
 export async function getAccessToken(
-  uid: SessionIdentifier,
+  sessionId: SessionIdentifier,
   onRefresh?: (storageValue: StorageValue) => void,
 ): Promise<string> {
-  let storageValue = getStorageValue(uid);
+  let storageValue = getStorageValue(sessionId);
   if (!storageValue) {
     throw new NeedLoginError("never login");
   }
@@ -73,7 +73,7 @@ export async function getAccessToken(
     const refreshToken = storageValue.refresh_token;
     const loginResult = await refresh(refreshToken);
     if (loginResult.ok) {
-      storageValue = updateStorage(uid, loginResult);
+      storageValue = updateStorage(sessionId, loginResult);
       if (onRefresh) {
         onRefresh(storageValue);
       }
