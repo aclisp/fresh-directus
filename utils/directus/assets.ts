@@ -1,4 +1,4 @@
-import { DIRECTUS_HOST } from "./transport.ts";
+export const DIRECTUS_HOST = "http://127.0.0.1:8055";
 
 interface AssetsOptions {
   altUrl?: string;

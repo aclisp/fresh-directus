@@ -33,6 +33,7 @@ export const handler: Handlers<LoginData> = {
     });
   },
   async POST(req, ctx) {
+    const { searchParams } = new URL(req.url);
     const formData = await req.formData();
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
@@ -63,7 +64,7 @@ export const handler: Handlers<LoginData> = {
     logger().debug(`update storage with new sessionId: ${newSid}`);
 
     const resp = new Response(`Redirecting to ...`, {
-      headers: { "Location": "/" },
+      headers: { "Location": searchParams.get("redirect") ?? "/" },
       status: 303,
     });
 

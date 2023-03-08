@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from "preact/hooks";
 import { io } from "socket.io-client";
-import { DIRECTUS_HOST } from "@/utils/directus/transport.ts";
 import { UserInfo } from "@/utils/directus/users.ts";
-import { assets } from "@/utils/directus/assets.ts";
+import { assets, DIRECTUS_HOST } from "@/utils/directus/assets.ts";
 
 interface ChannelProps {
   channel: string;

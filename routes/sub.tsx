@@ -4,6 +4,7 @@ import { State } from "@/utils/types.ts";
 import Channel from "@/islands/Channel.tsx";
 import { getLogger } from "$std/log/mod.ts";
 import { Head } from "$fresh/runtime.ts";
+import { redirectToLogin } from "@/utils/redirect-to-login.ts";
 
 interface SubscribeData {
   channel: string | null;
@@ -20,6 +21,9 @@ export const handler: Handlers<SubscribeData, State> = {
     const { searchParams } = new URL(req.url);
     const channel = searchParams.get("channel");
     const { accessToken } = ctx.state;
+    if (!accessToken) {
+      return redirectToLogin(req);
+    }
     const userInfo = await getCurrentUserInfo(accessToken);
     logger().debug(`accessToken: ${accessToken}`);
     const resp = await ctx.render({ channel, userInfo, accessToken });

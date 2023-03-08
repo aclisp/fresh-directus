@@ -4,6 +4,7 @@ import { State } from "@/utils/types.ts";
 import { assets } from "@/utils/directus/assets.ts";
 import { AfxAppFrame } from "@/components/AfxAppFrame.tsx";
 import AfxHeader from "@/islands/AfxHeader.tsx";
+import { redirectToLogin } from "@/utils/redirect-to-login.ts";
 
 interface ProfileData {
   userInfo: UserInfo;
@@ -13,6 +14,9 @@ interface ProfileData {
 export const handler: Handlers<ProfileData, State> = {
   async GET(req, ctx) {
     const { accessToken } = ctx.state;
+    if (!accessToken) {
+      return redirectToLogin(req);
+    }
     const userInfo = await getCurrentUserInfo(accessToken);
     const resp = await ctx.render({ userInfo, accessToken });
     return resp;

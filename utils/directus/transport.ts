@@ -1,7 +1,7 @@
 import { getLogger } from "$std/log/mod.ts";
 import { getAccessToken, SessionIdentifier } from "./auth.ts";
 
-export const DIRECTUS_HOST = "http://127.0.0.1:8055";
+const DIRECTUS_HOST_INTERNAL = "http://127.0.0.1:8055";
 
 export interface Result {
   ok: boolean;
@@ -46,7 +46,7 @@ export async function httpPost<T>(
     }
     headers.set("Authorization", `Bearer ${accessToken}`);
   }
-  let url = DIRECTUS_HOST + path;
+  let url = DIRECTUS_HOST_INTERNAL + path;
   if (params) {
     url += "?" + params;
   }
@@ -99,7 +99,7 @@ export async function httpGet<T>(
     }
     headers.set("Authorization", `Bearer ${accessToken}`);
   }
-  let url = DIRECTUS_HOST + path;
+  let url = DIRECTUS_HOST_INTERNAL + path;
   if (params) {
     url += "?" + params;
   }
