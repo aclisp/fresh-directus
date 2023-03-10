@@ -12,7 +12,8 @@ import manifest from "./fresh.gen.ts";
 
 import * as log from "$std/log/mod.ts";
 import { format } from "$std/datetime/mod.ts";
-import { dumpStorage, loadStorage } from "@/utils/directus/storage.ts";
+import { startJob, stopAllJobs } from "@/jobs/job-manager.ts";
+import { storageKeeper } from "@/jobs/storage-keeper.ts";
 
 log.setup({
   handlers: {
@@ -26,6 +27,10 @@ log.setup({
   loggers: {
     default: {
       level: "DEBUG",
+      handlers: ["console"],
+    },
+    "jobs": {
+      level: "INFO",
       handlers: ["console"],
     },
     "routes/sub": {
@@ -47,27 +52,14 @@ log.setup({
   },
 });
 
-await loadStorage();
-
+await startJob(storageKeeper);
 async function onExit() {
-  await dumpStorage();
+  await stopAllJobs();
   log.debug("Bye~");
   Deno.exit();
 }
-
-for (
-  const signal of [
-    "SIGINT",
-    "SIGTERM",
-    "SIGHUP",
-    "SIGQUIT",
-  ]
-) {
+for (const signal of ["SIGINT", "SIGTERM", "SIGHUP", "SIGQUIT"]) {
   Deno.addSignalListener(signal as Deno.Signal, onExit);
 }
-
-setInterval(() => {
-  dumpStorage();
-}, 13000);
 
 await start(manifest /*{ plugins: [twindPlugin(twindConfig)] }*/);

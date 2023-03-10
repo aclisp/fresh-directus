@@ -13,7 +13,7 @@ export interface StorageValue {
 
 const storage = new Map<SessionIdentifier, StorageValue>();
 
-function logger() {
+function _logger() {
   return getLogger("directus/storage");
 }
 
