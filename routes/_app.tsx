@@ -7,7 +7,7 @@ export default function App({ Component }: AppProps) {
       <Head>
         <title>Planar Sphere</title>
         <link
-          href="https://cdn.jsdelivr.net/npm/daisyui@2.51.3/dist/full.css"
+          href="https://cdn.jsdelivr.net/npm/daisyui@2.51.5/dist/full.css"
           rel="stylesheet"
           type="text/css"
         />
