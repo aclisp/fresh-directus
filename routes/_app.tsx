@@ -11,7 +11,8 @@ export default function App({ Component }: AppProps) {
           rel="stylesheet"
           type="text/css"
         />
-        <script src="https://cdn.tailwindcss.com/3.2.6?plugins=forms"></script>
+        <script src="https://cdn.tailwindcss.com/3.2.6?plugins=forms@0.5.3">
+        </script>
       </Head>
       <Component />
     </>
